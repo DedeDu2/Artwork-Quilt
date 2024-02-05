@@ -1,0 +1,17 @@
+from PIL import Image
+
+def create_quilt(artwork_paths, output_path):
+    quilt_size = (800, 600)
+    quilt = Image.new("RGB", quilt_size, "white")
+
+    for i, path in enumerate(artwork_paths):
+        artwork = Image.open(path)
+        artwork.thumbnail((quilt_size[0] // 2, quilt_size[1] // 2))  # Adjust size as needed
+        position = (i % 2 * (quilt_size[0] // 2), i // 2 * (quilt_size[1] // 2))
+        quilt.paste(artwork, position)
+
+    quilt.save(output_path)
+
+# Example usage:
+artwork_paths = ["path/to/artwork1.jpg", "path/to/artwork2.jpg", "path/to/artwork3.jpg"]
+create_quilt(artwork_paths, "path/to/artwork_quilt.jpg")
